@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChurnGuard - AI Telco Churn Predictor</title>
+    <meta name="description" content="AI-powered Telco Churn Prediction System.">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        slate: {
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        },
+                        accent: '#3b82f6',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body class="bg-slate-900 text-white min-h-screen font-sans antialiased overflow-x-hidden selection:bg-accent selection:text-white pb-12 relative">
+    
+    <!-- Header -->
+    <header class="w-full py-12 text-center z-10 relative">
+        <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-3 drop-shadow-md">
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-accent">Churn</span>Guard
+        </h1>
+        <p class="text-slate-400 max-w-xl mx-auto px-4 font-medium">Advanced machine learning system predicting telecommunication customer retention probability.</p>
+    </header>
+
+    <!-- Main Container -->
+    <main class="w-full max-w-4xl mx-auto px-4 relative z-10">
+        
+        <!-- Form Card -->
+        <div class="glass rounded-3xl p-6 md:p-10 mb-10">
+            <form id="churnForm" class="space-y-8">
+                
+                <h2 class="text-2xl font-bold mb-6 border-b border-slate-700/50 pb-4 text-slate-100">Customer Profile</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    
+                    <!-- Age -->
+                    <div class="space-y-2">
+                        <label for="age" class="block text-sm font-semibold text-slate-300 tracking-wide uppercase text-xs">Age</label>
+                        <input type="number" id="age" name="age" required min="18" max="120"
+                            class="input-field w-full rounded-xl px-4 py-3" placeholder="e.g., 34">
+                    </div>
+
+                    <!-- Tenure -->
+                    <div class="space-y-2">
+                        <label for="tenure" class="block text-sm font-semibold text-slate-300 tracking-wide uppercase text-xs">Tenure (Months)</label>
+                        <input type="number" id="tenure" name="tenure" required min="0"
+                            class="input-field w-full rounded-xl px-4 py-3" placeholder="e.g., 24">
+                    </div>
+
+                    <!-- Monthly Charges -->
+                    <div class="space-y-2">
+                        <label for="monthly_charges" class="block text-sm font-semibold text-slate-300 tracking-wide uppercase text-xs">Monthly Charges</label>
+                        <div class="relative">
+                            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-medium">$</span>
+                            <input type="number" step="0.01" id="monthly_charges" name="monthly_charges" required min="0"
+                                class="input-field w-full rounded-xl pl-9 pr-4 py-3" placeholder="0.00">
+                        </div>
+                    </div>
+
+                    <!-- Total Charges -->
+                    <div class="space-y-2">
+                        <label for="total_charges" class="block text-sm font-semibold text-slate-300 tracking-wide uppercase text-xs">Total Charges</label>
+                        <div class="relative">
+                            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-medium">$</span>
+                            <input type="number" step="0.01" id="total_charges" name="total_charges" required min="0"
+                                class="input-field w-full rounded-xl pl-9 pr-4 py-3" placeholder="0.00">
+                        </div>
+                    </div>
+
+                    <!-- Gender -->
+                    <div class="space-y-2">
+                        <label for="gender" class="block text-sm font-semibold text-slate-300 tracking-wide uppercase text-xs">Gender</label>
+                        <select id="gender" name="gender" required class="input-field w-full rounded-xl px-4 py-3 appearance-none cursor-pointer">
+                            <option value="" disabled selected>Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <!-- Contract Type -->
+                    <div class="space-y-2">
+                        <label for="contract" class="block text-sm font-semibold text-slate-300 tracking-wide uppercase text-xs">Contract Type</label>
+                        <select id="contract" name="contract" required class="input-field w-full rounded-xl px-4 py-3 appearance-none cursor-pointer">
+                            <option value="" disabled selected>Select Contract</option>
+                            <option value="Month-to-month">Month-to-month</option>
+                            <option value="One year">One year</option>
+                            <option value="Two year">Two year</option>
+                        </select>
+                    </div>
+
+                    <!-- Payment Method -->
+                    <div class="space-y-2 md:col-span-2">
+                        <label for="payment_method" class="block text-sm font-semibold text-slate-300 tracking-wide uppercase text-xs">Payment Method</label>
+                        <select id="payment_method" name="payment_method" required class="input-field w-full rounded-xl px-4 py-3 appearance-none cursor-pointer">
+                            <option value="" disabled selected>Select Payment Method</option>
+                            <option value="Electronic check">Electronic check</option>
+                            <option value="Mailed check">Mailed check</option>
+                            <option value="Bank transfer">Bank transfer</option>
+                            <option value="Credit card">Credit card</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="pt-8">
+                    <button type="submit" id="submitBtn" class="btn-primary w-full bg-accent hover:bg-blue-600 text-white font-bold text-lg py-4 rounded-xl flex items-center justify-center gap-3">
+                        <svg id="spinner" class="animate-spin -ml-1 mr-2 h-6 w-6 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        <span id="btnText">Analyze Churn Risk</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Result Section -->
+        <div id="resultSection" class="hidden w-full transition-all duration-500 ease-in-out">
+            <!-- Dynamically populated by JS -->
+        </div>
+
+    </main>
+
+    <!-- Background Decoration -->
+    <div class="fixed top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-accent/20 blur-[120px] pointer-events-none -z-10"></div>
+    <div class="fixed bottom-[-20%] right-[-10%] w-[40%] h-[40%] rounded-full bg-purple-600/20 blur-[120px] pointer-events-none -z-10"></div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
