@@ -1,0 +1,99 @@
+/* Glassmorphism utility */
+.glass {
+    background: rgba(30, 41, 59, 0.4);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
+}
+
+/* Custom form inputs */
+.input-field {
+    background: rgba(15, 23, 42, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: #3b82f6;
+    background: rgba(15, 23, 42, 0.8);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.input-field::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+/* Select element dark styling */
+select.input-field option {
+    background-color: #0f172a;
+    color: #fff;
+}
+
+/* Button Glow & Scale */
+.btn-primary {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 14px 0 rgba(59, 130, 246, 0.39);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6), 0 0 40px rgba(59, 130, 246, 0.2);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+/* Dynamic Result Cards */
+.card-risk {
+    background: linear-gradient(135deg, #7f1d1d 0%, #991b1b 100%);
+    box-shadow: 0 20px 40px -10px rgba(153, 27, 27, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.card-safe {
+    background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
+    box-shadow: 0 20px 40px -10px rgba(6, 95, 70, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* SVG Progress animations */
+.progress-ring__circle {
+    transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+}
+
+/* Smooth fade in */
+@keyframes fadeIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(20px) scale(0.95); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0) scale(1); 
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Scrollbar styling for a premium feel */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #0f172a; 
+}
+::-webkit-scrollbar-thumb {
+    background: #334155; 
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #475569; 
+}
